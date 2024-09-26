@@ -1,3 +1,22 @@
 #!/usr/bin/env ruby
 
 require "budget_to_actual"
+require "csv"
+
+CSV.open(
+  "#{Time.now.to_i}_actual_import.csv",
+  "wb",
+  headers: BudgetToActual::Transaction::CSV_HEADERS,
+  write_headers: true
+) do |csv|
+  CSV.foreach(
+    ARGF.to_io,
+    col_sep: "\t",
+    empty_value: nil,
+    quote_char: nil,
+    row_sep: "\n"
+  ) do |row|
+    transaction = BudgetToActual.transaction_for(*row)
+    csv.add_row(transaction.to_csv_row)
+  end
+end

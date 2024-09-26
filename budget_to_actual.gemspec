@@ -18,6 +18,10 @@ Gem::Specification.new do |spec|
     end
   end
 
+  spec.add_dependency("bigdecimal")
+  spec.add_dependency("csv")
+  spec.add_dependency("monetize", "~> 1.13")
+
   spec.add_development_dependency("minitest")
   spec.add_development_dependency("rake")
   spec.add_development_dependency("standard")
